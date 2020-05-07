@@ -1,0 +1,25 @@
+﻿@model IEnumerable<webapi.Data.ReqLog>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout_Landing.cshtml";
+}
+    <div class="container">
+        <div class="col-md-4">
+            <img class="landingimage" src="~/Content/images/orionsquarecheetah.jpg" />
+        </div>
+        <div class="col-md-8">
+            <h2>Welcome to Greenbeam Orion Ltd Internet enquiry </h2>
+            <p>
+                Orion UK offer a full range of internet services. In addition to our Fixed Wireless Network covering Devon and Somerset we also
+                can provide full fibre and cable installations where available.
+            </p>
+            <p>To establish what service is avaible to you please complete the following form and press submit and we will respond to you identifying the services we can offer to you asap.</p>
+
+
+            <div class="btn btn-primary" >@Html.ActionLink("Complete Request Form", "Create")</div>
+                
+            
+        </div>
+    </div>
+

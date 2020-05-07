@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="radiusModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="nas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nasname" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="shortname" Type="varchar" MaxLength="32" />
+          <Property Name="type" Type="varchar" MaxLength="30" />
+          <Property Name="ports" Type="int" />
+          <Property Name="secret" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="server" Type="varchar" MaxLength="64" />
+          <Property Name="community" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="radacct">
+          <Key>
+            <PropertyRef Name="radacctid" />
+          </Key>
+          <Property Name="radacctid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="acctsessionid" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="acctuniqueid" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="groupname" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="realm" Type="varchar" MaxLength="64" />
+          <Property Name="nasipaddress" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="nasportid" Type="varchar" MaxLength="15" />
+          <Property Name="nasporttype" Type="varchar" MaxLength="32" />
+          <Property Name="acctstarttime" Type="datetime" Precision="0" />
+          <Property Name="acctstoptime" Type="datetime" Precision="0" />
+          <Property Name="acctsessiontime" Type="int" />
+          <Property Name="acctauthentic" Type="varchar" MaxLength="32" />
+          <Property Name="connectinfo_start" Type="varchar" MaxLength="50" />
+          <Property Name="connectinfo_stop" Type="varchar" MaxLength="50" />
+          <Property Name="acctinputoctets" Type="bigint" />
+          <Property Name="acctoutputoctets" Type="bigint" />
+          <Property Name="calledstationid" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="callingstationid" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="acctterminatecause" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="servicetype" Type="varchar" MaxLength="32" />
+          <Property Name="framedprotocol" Type="varchar" MaxLength="32" />
+          <Property Name="framedipaddress" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="acctstartdelay" Type="int" />
+          <Property Name="acctstopdelay" Type="int" />
+          <Property Name="xascendsessionsvrkey" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="radcheck">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="attribute" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="op" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="253" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.radius.radusergroup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="radusergroup">
+          <Key>
+            <PropertyRef Name="username" />
+            <PropertyRef Name="groupname" />
+            <PropertyRef Name="priority" />
+          </Key>
+          <Property Name="username" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="groupname" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="priority" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.radius.RadiusEntry' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RadiusEntry">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="username" />
+            <PropertyRef Name="value" />
+            <PropertyRef Name="groupname" />
+          </Key>
+          <Property Name="id" Type="uint" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="253" Nullable="false" />
+          <Property Name="groupname" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="radiusModelStoreContainer">
+          <EntitySet Name="nas" EntityType="Self.nas" Schema="radius" store:Type="Tables" />
+          <EntitySet Name="radacct" EntityType="Self.radacct" Schema="radius" store:Type="Tables" />
+          <EntitySet Name="radcheck" EntityType="Self.radcheck" Schema="radius" store:Type="Tables" />
+          <EntitySet Name="radusergroup" EntityType="Self.radusergroup" store:Type="Tables" store:Schema="radius">
+            <DefiningQuery>SELECT
+`radusergroup`.`username`, 
+`radusergroup`.`groupname`, 
+`radusergroup`.`priority`
+FROM `radusergroup` AS `radusergroup`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="RadiusEntry" EntityType="Self.RadiusEntry" store:Type="Views" store:Schema="radius">
+            <DefiningQuery>SELECT
+`RadiusEntry`.`id`, 
+`RadiusEntry`.`username`, 
+`RadiusEntry`.`value`, 
+`RadiusEntry`.`groupname`
+FROM `RadiusEntry` AS `RadiusEntry`</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="radiusModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="na">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nasname" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="shortname" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ports" Type="Int32" />
+          <Property Name="secret" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="server" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="community" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="radacct">
+          <Key>
+            <PropertyRef Name="radacctid" />
+          </Key>
+          <Property Name="radacctid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="acctsessionid" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="acctuniqueid" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="groupname" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="realm" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="nasipaddress" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nasportid" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="nasporttype" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="acctstarttime" Type="DateTime" />
+          <Property Name="acctstoptime" Type="DateTime" />
+          <Property Name="acctsessiontime" Type="Int32" />
+          <Property Name="acctauthentic" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="connectinfo_start" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="connectinfo_stop" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="acctinputoctets" Type="Int64" />
+          <Property Name="acctoutputoctets" Type="Int64" />
+          <Property Name="calledstationid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="callingstationid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="acctterminatecause" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="servicetype" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="framedprotocol" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="framedipaddress" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="acctstartdelay" Type="Int32" />
+          <Property Name="acctstopdelay" Type="Int32" />
+          <Property Name="xascendsessionsvrkey" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="radcheck">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="attribute" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="op" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="253" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="radusergroup">
+          <Key>
+            <PropertyRef Name="username" />
+            <PropertyRef Name="groupname" />
+            <PropertyRef Name="priority" />
+          </Key>
+          <Property Name="username" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="groupname" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="priority" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RadiusEntry">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="username" />
+            <PropertyRef Name="value" />
+            <PropertyRef Name="groupname" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="253" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="groupname" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="radiusEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="nas" EntityType="Self.na" />
+          <EntitySet Name="radaccts" EntityType="Self.radacct" />
+          <EntitySet Name="radchecks" EntityType="Self.radcheck" />
+          <EntitySet Name="radusergroups" EntityType="Self.radusergroup" />
+          <EntitySet Name="RadiusEntries" EntityType="Self.RadiusEntry" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="radiusModelStoreContainer" CdmEntityContainer="radiusEntities">
+          <EntitySetMapping Name="nas">
+            <EntityTypeMapping TypeName="radiusModel.na">
+              <MappingFragment StoreEntitySet="nas">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nasname" ColumnName="nasname" />
+                <ScalarProperty Name="shortname" ColumnName="shortname" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="ports" ColumnName="ports" />
+                <ScalarProperty Name="secret" ColumnName="secret" />
+                <ScalarProperty Name="server" ColumnName="server" />
+                <ScalarProperty Name="community" ColumnName="community" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="radaccts">
+            <EntityTypeMapping TypeName="radiusModel.radacct">
+              <MappingFragment StoreEntitySet="radacct">
+                <ScalarProperty Name="radacctid" ColumnName="radacctid" />
+                <ScalarProperty Name="acctsessionid" ColumnName="acctsessionid" />
+                <ScalarProperty Name="acctuniqueid" ColumnName="acctuniqueid" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="groupname" ColumnName="groupname" />
+                <ScalarProperty Name="realm" ColumnName="realm" />
+                <ScalarProperty Name="nasipaddress" ColumnName="nasipaddress" />
+                <ScalarProperty Name="nasportid" ColumnName="nasportid" />
+                <ScalarProperty Name="nasporttype" ColumnName="nasporttype" />
+                <ScalarProperty Name="acctstarttime" ColumnName="acctstarttime" />
+                <ScalarProperty Name="acctstoptime" ColumnName="acctstoptime" />
+                <ScalarProperty Name="acctsessiontime" ColumnName="acctsessiontime" />
+                <ScalarProperty Name="acctauthentic" ColumnName="acctauthentic" />
+                <ScalarProperty Name="connectinfo_start" ColumnName="connectinfo_start" />
+                <ScalarProperty Name="connectinfo_stop" ColumnName="connectinfo_stop" />
+                <ScalarProperty Name="acctinputoctets" ColumnName="acctinputoctets" />
+                <ScalarProperty Name="acctoutputoctets" ColumnName="acctoutputoctets" />
+                <ScalarProperty Name="calledstationid" ColumnName="calledstationid" />
+                <ScalarProperty Name="callingstationid" ColumnName="callingstationid" />
+                <ScalarProperty Name="acctterminatecause" ColumnName="acctterminatecause" />
+                <ScalarProperty Name="servicetype" ColumnName="servicetype" />
+                <ScalarProperty Name="framedprotocol" ColumnName="framedprotocol" />
+                <ScalarProperty Name="framedipaddress" ColumnName="framedipaddress" />
+                <ScalarProperty Name="acctstartdelay" ColumnName="acctstartdelay" />
+                <ScalarProperty Name="acctstopdelay" ColumnName="acctstopdelay" />
+                <ScalarProperty Name="xascendsessionsvrkey" ColumnName="xascendsessionsvrkey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="radchecks">
+            <EntityTypeMapping TypeName="radiusModel.radcheck">
+              <MappingFragment StoreEntitySet="radcheck">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="attribute" ColumnName="attribute" />
+                <ScalarProperty Name="op" ColumnName="op" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="radusergroups">
+            <EntityTypeMapping TypeName="radiusModel.radusergroup">
+              <MappingFragment StoreEntitySet="radusergroup">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="groupname" ColumnName="groupname" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RadiusEntries">
+            <EntityTypeMapping TypeName="radiusModel.RadiusEntry">
+              <MappingFragment StoreEntitySet="RadiusEntry">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="groupname" ColumnName="groupname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

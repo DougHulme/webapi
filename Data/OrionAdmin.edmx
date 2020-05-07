@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OrionAdminModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="LandingForm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Full Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="eMailAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="PostCode" Type="nchar" MaxLength="10" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="UCRMId" Type="int" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="lat" Type="real" />
+          <Property Name="lng" Type="real" />
+        </EntityType>
+        <EntityType Name="pppoetoClient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="eMail" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClientName" Type="nvarchar" MaxLength="50" />
+          <Property Name="pppoeName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="radiusUsage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
+          <Property Name="upload" Type="bigint" />
+          <Property Name="download" Type="bigint" />
+          <Property Name="date" Type="date" />
+        </EntityType>
+        <EntityType Name="radUsagePivot6mth">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="unms_user" Type="nvarchar" MaxLength="50" />
+          <Property Name="rad_user" Type="nvarchar" MaxLength="50" />
+          <Property Name="01" Type="int" />
+          <Property Name="02" Type="int" />
+          <Property Name="03" Type="int" />
+          <Property Name="04" Type="int" />
+          <Property Name="05" Type="int" />
+          <Property Name="06" Type="int" />
+          <Property Name="Direction" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="ReqLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Post Code" Type="nchar" MaxLength="10" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="eMail" Type="nvarchar" MaxLength="50" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="snmpResults">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Server" Type="nvarchar" MaxLength="15" />
+          <Property Name="inbytes" Type="bigint" />
+          <Property Name="outbytes" Type="bigint" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Edited" Type="int" />
+        </EntityType>
+        <EntityType Name="snmpResultsEdited">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateFrom" Type="datetime" />
+          <Property Name="Server" Type="nvarchar" MaxLength="15" />
+          <Property Name="upload" Type="bigint" />
+          <Property Name="download" Type="bigint" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="WebHookLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="body" Type="nvarchar(max)" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OrionAdmin.dbo.snmpentries6mth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="snmpentries6mth">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="MonthIn" Type="int" />
+          <Property Name="upload" Type="bigint" />
+          <Property Name="download" Type="bigint" />
+        </EntityType>
+        <EntityContainer Name="OrionAdminModelStoreContainer">
+          <EntitySet Name="LandingForm" EntityType="Self.LandingForm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pppoetoClient" EntityType="Self.pppoetoClient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="radiusUsage" EntityType="Self.radiusUsage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="radUsagePivot6mth" EntityType="Self.radUsagePivot6mth" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReqLog" EntityType="Self.ReqLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="snmpResults" EntityType="Self.snmpResults" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="snmpResultsEdited" EntityType="Self.snmpResultsEdited" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WebHookLog" EntityType="Self.WebHookLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="snmpentries6mth" EntityType="Self.snmpentries6mth" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [snmpentries6mth].[Id] AS [Id], 
+    [snmpentries6mth].[Username] AS [Username], 
+    [snmpentries6mth].[MonthIn] AS [MonthIn], 
+    [snmpentries6mth].[upload] AS [upload], 
+    [snmpentries6mth].[download] AS [download]
+    FROM [dbo].[snmpentries6mth] AS [snmpentries6mth]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OrionAdminModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="LandingForm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Full_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="eMailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UCRMId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="lat" Type="Single" />
+          <Property Name="lng" Type="Single" />
+        </EntityType>
+        <EntityType Name="radUsagePivot6mth">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="unms_user" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rad_user" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="C01" Type="Int32" />
+          <Property Name="C02" Type="Int32" />
+          <Property Name="C03" Type="Int32" />
+          <Property Name="C04" Type="Int32" />
+          <Property Name="C05" Type="Int32" />
+          <Property Name="C06" Type="Int32" />
+          <Property Name="Direction" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ReqLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Post_Code" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="eMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="snmpResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Server" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="inbytes" Type="Int64" />
+          <Property Name="outbytes" Type="Int64" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Edited" Type="Int32" />
+        </EntityType>
+        <EntityType Name="WebHookLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="OrionAdminEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LandingForms" EntityType="Self.LandingForm" />
+          <EntitySet Name="radUsagePivot6mth" EntityType="Self.radUsagePivot6mth" />
+          <EntitySet Name="ReqLogs" EntityType="Self.ReqLog" />
+          <EntitySet Name="snmpResults" EntityType="Self.snmpResult" />
+          <EntitySet Name="WebHookLogs" EntityType="Self.WebHookLog" />
+          <EntitySet Name="snmpResultsEditeds" EntityType="OrionAdminModel.snmpResultsEdited" />
+          <EntitySet Name="snmpentries6mth" EntityType="OrionAdminModel.snmpentries6mth" />
+          <EntitySet Name="pppoetoClients" EntityType="OrionAdminModel.pppoetoClient" />
+          <EntitySet Name="radiusUsages" EntityType="OrionAdminModel.radiusUsage" />
+        </EntityContainer>
+        <EntityType Name="snmpResultsEdited">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateFrom" Type="DateTime" Precision="3" />
+          <Property Name="Server" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="upload" Type="Int64" />
+          <Property Name="download" Type="Int64" />
+        </EntityType>
+        <EntityType Name="snmpentries6mth">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="upload" Type="Int64" />
+          <Property Name="download" Type="Int64" />
+          <Property Name="MonthIn" Type="Int32" />
+        </EntityType>
+        <EntityType Name="pppoetoClient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="eMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pppoeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="radiusUsage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="upload" Type="Int64" />
+          <Property Name="download" Type="Int64" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OrionAdminModelStoreContainer" CdmEntityContainer="OrionAdminEntities">
+          <EntitySetMapping Name="LandingForms">
+            <EntityTypeMapping TypeName="OrionAdminModel.LandingForm">
+              <MappingFragment StoreEntitySet="LandingForm">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Full_Name" ColumnName="Full Name" />
+                <ScalarProperty Name="eMailAddress" ColumnName="eMailAddress" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="UCRMId" ColumnName="UCRMId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="lng" ColumnName="lng" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="radUsagePivot6mth">
+            <EntityTypeMapping TypeName="OrionAdminModel.radUsagePivot6mth">
+              <MappingFragment StoreEntitySet="radUsagePivot6mth">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="unms_user" ColumnName="unms_user" />
+                <ScalarProperty Name="rad_user" ColumnName="rad_user" />
+                <ScalarProperty Name="C01" ColumnName="01" />
+                <ScalarProperty Name="C02" ColumnName="02" />
+                <ScalarProperty Name="C03" ColumnName="03" />
+                <ScalarProperty Name="C04" ColumnName="04" />
+                <ScalarProperty Name="C05" ColumnName="05" />
+                <ScalarProperty Name="C06" ColumnName="06" />
+                <ScalarProperty Name="Direction" ColumnName="Direction" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReqLogs">
+            <EntityTypeMapping TypeName="OrionAdminModel.ReqLog">
+              <MappingFragment StoreEntitySet="ReqLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Post_Code" ColumnName="Post Code" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="eMail" ColumnName="eMail" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="snmpResults">
+            <EntityTypeMapping TypeName="OrionAdminModel.snmpResult">
+              <MappingFragment StoreEntitySet="snmpResults">
+                <ScalarProperty Name="Edited" ColumnName="Edited" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Server" ColumnName="Server" />
+                <ScalarProperty Name="inbytes" ColumnName="inbytes" />
+                <ScalarProperty Name="outbytes" ColumnName="outbytes" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WebHookLogs">
+            <EntityTypeMapping TypeName="OrionAdminModel.WebHookLog">
+              <MappingFragment StoreEntitySet="WebHookLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="body" ColumnName="body" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="snmpResultsEditeds">
+            <EntityTypeMapping TypeName="OrionAdminModel.snmpResultsEdited">
+              <MappingFragment StoreEntitySet="snmpResultsEdited">
+                <ScalarProperty Name="download" ColumnName="download" />
+                <ScalarProperty Name="upload" ColumnName="upload" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Server" ColumnName="Server" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="snmpentries6mth">
+            <EntityTypeMapping TypeName="OrionAdminModel.snmpentries6mth">
+              <MappingFragment StoreEntitySet="snmpentries6mth">
+                <ScalarProperty Name="MonthIn" ColumnName="MonthIn" />
+                <ScalarProperty Name="download" ColumnName="download" />
+                <ScalarProperty Name="upload" ColumnName="upload" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pppoetoClients">
+            <EntityTypeMapping TypeName="OrionAdminModel.pppoetoClient">
+              <MappingFragment StoreEntitySet="pppoetoClient">
+                <ScalarProperty Name="pppoeName" ColumnName="pppoeName" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="eMail" ColumnName="eMail" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="radiusUsages">
+            <EntityTypeMapping TypeName="OrionAdminModel.radiusUsage">
+              <MappingFragment StoreEntitySet="radiusUsage">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="download" ColumnName="download" />
+                <ScalarProperty Name="upload" ColumnName="upload" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

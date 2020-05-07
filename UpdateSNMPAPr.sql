@@ -1,0 +1,1 @@
+﻿delete from radiususage where Year(date)=2020 and month(date)=4 ;insert into radiusUsage (Username, Date, upload, download) select b.ClientName, a.DateFrom, a.download, a.upload from snmpResultsEdited a join pppoetoclient b on a.Name = b.pppoeName where Year(DateFrom) =2020 and Month(DateFrom)=4

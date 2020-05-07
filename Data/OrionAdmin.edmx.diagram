@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0e7752f5c8124b6bbe1559bc4e410dd1" Name="Diagram1">
+        <EntityTypeShape EntityType="OrionAdminModel.LandingForm" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrionAdminModel.radUsagePivot6mth" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrionAdminModel.ReqLog" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrionAdminModel.snmpResult" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrionAdminModel.WebHookLog" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrionAdminModel.snmpResultsEdited" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="OrionAdminModel.snmpentries6mth" Width="1.5" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="OrionAdminModel.pppoetoClient" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="OrionAdminModel.radiusUsage" Width="1.5" PointX="7.375" PointY="4.125" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
