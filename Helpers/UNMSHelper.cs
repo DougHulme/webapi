@@ -458,8 +458,9 @@ namespace webapi.Helpers
             {
                 if (ca.name == "PPPoE User") { pppoeid = ca.value; };
             }
-            if(pppoeid!=""){
-
+            if(pppoeid!="")
+            {
+                MikrotikHelper.suspendpppoeuser(pppoeid);
             }
             return true;
         }

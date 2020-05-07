@@ -5,6 +5,7 @@ using System.Web;
 using tik4net;
 using tik4net.Objects;
 using tik4net.Objects.Ip.Firewall;
+using tik4net.Objects.Ppp;
 using webapi.Data;
 
 namespace webapi.Helpers
@@ -64,7 +65,7 @@ namespace webapi.Helpers
                     {
                         radiusUsage ru = new radiusUsage();
                         ru.date = ra.acctstarttime;
-                        ru.upload =  ra.acctinputoctets / 8;
+                        ru.upload = ra.acctinputoctets / 8;
                         ru.download = ra.acctoutputoctets / 8;
                         ru.username = ra.username;
                         oadb.radiusUsages.Add(ru);
@@ -77,7 +78,7 @@ namespace webapi.Helpers
                         {
                             radiusUsage ru = new radiusUsage();
                             ru.date = ra.acctstarttime.Value.AddDays(i);
-                            ru.upload =( ra.acctinputoctets / 8) / totaldays;
+                            ru.upload = (ra.acctinputoctets / 8) / totaldays;
                             ru.download = (ra.acctoutputoctets / 8) / totaldays;
                             ru.username = ra.username;
                             oadb.radiusUsages.Add(ru);
@@ -90,7 +91,7 @@ namespace webapi.Helpers
 
             return true;
         }
-            public static bool UpdateSecret()
+        public static bool UpdateSecret()
         {
             using (ITikConnection connection = ConnectionFactory.CreateConnection(TikConnectionType.Api)) // Use TikConnectionType.Api for mikrotikversion prior v6.45
             {
@@ -114,5 +115,41 @@ namespace webapi.Helpers
                 return true;
             }
         }
+
+        public static bool suspendpppoeuser(string pppoeuser)
+        {
+            using (ITikConnection connection = ConnectionFactory.CreateConnection(TikConnectionType.Api)) // Use TikConnectionType.Api for mikrotikversion prior v6.45
+            {
+                connection.Open("10.19.10.1", "OrionAdmin", "Frank1e2015");
+
+
+                var pppoeactive = connection.LoadList<PppActive>();
+                foreach (PppActive pppa in pppoeactive)
+                {
+                    string ipaddress = "";
+                    if (pppa.Name == pppoeuser)
+                    {
+                        ipaddress = pppa.Address;
+                    }
+                    if (ipaddress != "")
+                    {
+                        ITikCommand cmd = connection.CreateCommand("/ip/firewall/address-list/add",
+                             connection.CreateParameter("list", "unmssuspend"),
+                            connection.CreateParameter("address", ipaddress),
+                            connection.CreateParameter("comment", "suspend"));
+                                cmd.ExecuteAsync(response =>
+                        {
+                            // Console.WriteLine("Row: " + response.GetResponseField("tx"));
+                        });
+
+                        cmd.Cancel();
+                    }
+                }
+
+                connection.Close();
+            }
+            return true;
+        }
     }
 }
+
