@@ -89,6 +89,13 @@
           <Property Name="download" Type="bigint" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="unms_Suspend">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ipaddress" Type="nchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="WebHookLog">
           <Key>
             <PropertyRef Name="Id" />
@@ -117,6 +124,7 @@ warning 6002: The table/view 'OrionAdmin.dbo.snmpentries6mth' does not have a pr
           <EntitySet Name="ReqLog" EntityType="Self.ReqLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="snmpResults" EntityType="Self.snmpResults" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="snmpResultsEdited" EntityType="Self.snmpResultsEdited" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="unms_Suspend" EntityType="Self.unms_Suspend" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebHookLog" EntityType="Self.WebHookLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="snmpentries6mth" EntityType="Self.snmpentries6mth" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -204,6 +212,7 @@ warning 6002: The table/view 'OrionAdmin.dbo.snmpentries6mth' does not have a pr
           <EntitySet Name="snmpentries6mth" EntityType="OrionAdminModel.snmpentries6mth" />
           <EntitySet Name="pppoetoClients" EntityType="OrionAdminModel.pppoetoClient" />
           <EntitySet Name="radiusUsages" EntityType="OrionAdminModel.radiusUsage" />
+          <EntitySet Name="unms_Suspend" EntityType="OrionAdminModel.unms_Suspend" />
         </EntityContainer>
         <EntityType Name="snmpResultsEdited">
           <Key>
@@ -244,6 +253,13 @@ warning 6002: The table/view 'OrionAdmin.dbo.snmpentries6mth' does not have a pr
           <Property Name="upload" Type="Int64" />
           <Property Name="download" Type="Int64" />
           <Property Name="date" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="unms_Suspend">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ipaddress" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -358,6 +374,14 @@ warning 6002: The table/view 'OrionAdmin.dbo.snmpentries6mth' does not have a pr
                 <ScalarProperty Name="download" ColumnName="download" />
                 <ScalarProperty Name="upload" ColumnName="upload" />
                 <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="unms_Suspend">
+            <EntityTypeMapping TypeName="OrionAdminModel.unms_Suspend">
+              <MappingFragment StoreEntitySet="unms_Suspend">
+                <ScalarProperty Name="ipaddress" ColumnName="ipaddress" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
