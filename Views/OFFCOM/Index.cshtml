@@ -1,0 +1,111 @@
+﻿@model IEnumerable<webapi.Data.OFFCOM>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.House_no)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sitePostcode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C2lettergridsquare)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C3lettereasting)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C3letternorthing)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.easting)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.northing)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.terminaltype)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Town)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.County)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.postcode)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.House_no)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sitePostcode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C2lettergridsquare)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C3lettereasting)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C3letternorthing)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.easting)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.northing)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.terminaltype)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Town)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.County)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.postcode)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

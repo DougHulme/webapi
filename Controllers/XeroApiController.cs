@@ -24,7 +24,7 @@ namespace webapi.Controllers
         public IHttpActionResult get()
         {
 
-            string payload = db.WebHookLogs.Where(a => a.Id == 191300).Select(a => a.body).FirstOrDefault();
+            string payload = db.WebHookLogs.Where(a => a.Id == 20446).Select(a => a.body).FirstOrDefault();
             var xevents = JsonConvert.DeserializeObject<XeroWebhookEvents>(payload);
             foreach (Xerowebhookevent xevent in xevents.events)
             {
@@ -34,12 +34,7 @@ namespace webapi.Controllers
                         // just update payment at this time
                         var res1 = UNMSHelper.addPaymentFromXero(XeroHelper.getXeroInvoice(xevent.resourceURL.Substring(xevent.resourceURL.Length - 36)));
                         break;
-                    case "CONTACT":
-                        var res2 = UNMSHelper.addorupdateClientFromXero(XeroHelper.getXeroContact(xevent.resourceURL.Substring(xevent.resourceURL.Length - 36)));
-                        break;
-
                 }
-           
             }
             return Ok();
         }
@@ -48,19 +43,10 @@ namespace webapi.Controllers
         public IHttpActionResult post()
         {
             WebHookLog dbwl = new WebHookLog();
-            dbwl.body = "received xero web hook ";
-            dbwl.Date = DateTime.Now;
-            db.WebHookLogs.Add(dbwl);
-            db.SaveChanges();
 
             // retrieve xero key
             var xerosignature = Request.Headers.GetValues("x-xero-signature").FirstOrDefault();
             var payload= Request.Content.ReadAsStringAsync().Result;
-            dbwl.body = payload;
-            dbwl.Date = DateTime.Now;
-            db.WebHookLogs.Add(dbwl);
-            db.SaveChanges();
-           
             String app_key = "4q1NTvJRtUuiUCvpo3FKSd3NlAUom53uY+ODoyr4sskmxPa9JSZifVM7g8S8G8k7Ipwde6Hj3MFVXMnmyrD9pg==";
             string generatedsignature = "";
             using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(app_key)))
@@ -73,7 +59,7 @@ namespace webapi.Controllers
             var isValid = generatedsignature == xerosignature;
             if (!isValid)
             {
-                dbwl.body = "Not Valid";
+                dbwl.body = "Invalid Xerosignature";
                 dbwl.Date = DateTime.Now;
                 db.WebHookLogs.Add(dbwl);
                 db.SaveChanges();
@@ -86,24 +72,24 @@ namespace webapi.Controllers
                 switch (xevent.eventCategory)
                 {
                     case "INVOICE":
+                       
+                        dbwl.body = "received xero web hook invoice ";
+                        dbwl.Date = DateTime.Now;
+                        db.WebHookLogs.Add(dbwl);
+                        db.SaveChanges();
+                        dbwl.body = payload;
+                        dbwl.Date = DateTime.Now;
+                        db.WebHookLogs.Add(dbwl);
+                        db.SaveChanges();
                         var res1 = UNMSHelper.addPaymentFromXero(XeroHelper.getXeroInvoice(xevent.resourceId));
                         break;
-                    case "CONTACT":
-                        // contact updates only come from UNMS
-                   //     var res2 = UNMSHelper.addorupdateClientFromXero(XeroHelper.getXeroContact(xevent.resourceId));
-                        break;
-                   
                 }
-               
             }
             dbwl.body = "OK Valid";
             dbwl.Date = DateTime.Now;
             db.WebHookLogs.Add(dbwl);
             db.SaveChanges();
             return Ok();
-
         }
-        
-       
     }
 }

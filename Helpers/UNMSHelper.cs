@@ -217,7 +217,6 @@ namespace webapi.Helpers
                 var responseString = responseContent.ReadAsStringAsync().Result;
                 if (responseString.Substring(0, 1) == "[") { responseString = responseString.Substring(1, responseString.Length - 2); }
                 return JsonConvert.DeserializeObject<List<Models.User>>(responseString);
-
             }
             else
             {
@@ -378,7 +377,7 @@ namespace webapi.Helpers
                     {
                         foreach (Xero.Api.Core.Model.Payment Xpay in xinvoice.Payments )
                         {
-                            if (Xpay.Reference == "from Unms")
+                            if (Xpay.Reference != "from Unms")
                             {
                                 Models.UnmsPaymentAdd Upay = new Models.UnmsPaymentAdd();
                                 Upay.amount = Convert.ToDouble(Xpay.Amount);

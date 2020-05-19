@@ -21,6 +21,26 @@
           <Property Name="lat" Type="real" />
           <Property Name="lng" Type="real" />
         </EntityType>
+        <EntityType Name="OFFCOM">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="House no" Type="nvarchar" MaxLength="50" />
+          <Property Name="sitePostcode" Type="nvarchar" MaxLength="20" />
+          <Property Name="2lettergridsquare" Type="nchar" MaxLength="2" />
+          <Property Name="3lettereasting" Type="nchar" MaxLength="3" />
+          <Property Name="3letternorthing" Type="nchar" MaxLength="3" />
+          <Property Name="easting" Type="nvarchar" MaxLength="50" />
+          <Property Name="northing" Type="nvarchar" MaxLength="50" />
+          <Property Name="terminaltype" Type="nvarchar" MaxLength="50" />
+          <Property Name="firstname" Type="nvarchar" MaxLength="50" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="address" Type="nvarchar(max)" />
+          <Property Name="Town" Type="nvarchar" MaxLength="50" />
+          <Property Name="County" Type="nvarchar" MaxLength="50" />
+          <Property Name="postcode" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="pppoetoClient">
           <Key>
             <PropertyRef Name="Id" />
@@ -118,6 +138,7 @@ warning 6002: The table/view 'OrionAdmin.dbo.snmpentries6mth' does not have a pr
         </EntityType>
         <EntityContainer Name="OrionAdminModelStoreContainer">
           <EntitySet Name="LandingForm" EntityType="Self.LandingForm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OFFCOM" EntityType="Self.OFFCOM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="pppoetoClient" EntityType="Self.pppoetoClient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="radiusUsage" EntityType="Self.radiusUsage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="radUsagePivot6mth" EntityType="Self.radUsagePivot6mth" Schema="dbo" store:Type="Tables" />
@@ -213,6 +234,7 @@ warning 6002: The table/view 'OrionAdmin.dbo.snmpentries6mth' does not have a pr
           <EntitySet Name="pppoetoClients" EntityType="OrionAdminModel.pppoetoClient" />
           <EntitySet Name="radiusUsages" EntityType="OrionAdminModel.radiusUsage" />
           <EntitySet Name="unms_Suspend" EntityType="OrionAdminModel.unms_Suspend" />
+          <EntitySet Name="OFFCOMs" EntityType="OrionAdminModel.OFFCOM" />
         </EntityContainer>
         <EntityType Name="snmpResultsEdited">
           <Key>
@@ -260,6 +282,26 @@ warning 6002: The table/view 'OrionAdmin.dbo.snmpentries6mth' does not have a pr
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ipaddress" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OFFCOM">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="House_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sitePostcode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="C2lettergridsquare" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="C3lettereasting" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="C3letternorthing" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="easting" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="northing" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="terminaltype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Town" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="County" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="postcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -382,6 +424,27 @@ warning 6002: The table/view 'OrionAdmin.dbo.snmpentries6mth' does not have a pr
             <EntityTypeMapping TypeName="OrionAdminModel.unms_Suspend">
               <MappingFragment StoreEntitySet="unms_Suspend">
                 <ScalarProperty Name="ipaddress" ColumnName="ipaddress" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OFFCOMs">
+            <EntityTypeMapping TypeName="OrionAdminModel.OFFCOM">
+              <MappingFragment StoreEntitySet="OFFCOM">
+                <ScalarProperty Name="postcode" ColumnName="postcode" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="Town" ColumnName="Town" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="terminaltype" ColumnName="terminaltype" />
+                <ScalarProperty Name="northing" ColumnName="northing" />
+                <ScalarProperty Name="easting" ColumnName="easting" />
+                <ScalarProperty Name="C3letternorthing" ColumnName="3letternorthing" />
+                <ScalarProperty Name="C3lettereasting" ColumnName="3lettereasting" />
+                <ScalarProperty Name="C2lettergridsquare" ColumnName="2lettergridsquare" />
+                <ScalarProperty Name="sitePostcode" ColumnName="sitePostcode" />
+                <ScalarProperty Name="House_no" ColumnName="House no" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

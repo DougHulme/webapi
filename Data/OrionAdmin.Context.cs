@@ -35,5 +35,6 @@ namespace webapi.Data
         public virtual DbSet<pppoetoClient> pppoetoClients { get; set; }
         public virtual DbSet<radiusUsage> radiusUsages { get; set; }
         public virtual DbSet<unms_Suspend> unms_Suspend { get; set; }
+        public virtual DbSet<OFFCOM> OFFCOMs { get; set; }
     }
 }

@@ -18,70 +18,24 @@ namespace webapi.Helpers
 {
     public static class HttpClientExtensions
     {
-        /// <summary>
-        /// Send a PATCH request to the specified Uri as an asynchronous operation.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// Returns <see cref="T:System.Threading.Tasks.Task`1"/>.The task object r.patchepresenting the asynchronous operation.
-        /// </returns>
-        /// <param name="client">The instantiated Http Client <see cref="HttpClient"/></param>
-        /// <param name="requestUri">The Uri the request is sent to.</param>
-        /// <param name="content">The HTTP request content sent to the server.</param>
-        /// <exception cref="T:System.ArgumentNullException">The <paramref name="client"/> was null.</exception>
-        /// <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri"/> was null.</exception>
+      
         public static Task<HttpResponseMessage> PatchAsync(this HttpClient client, string requestUri, HttpContent content)
         {
             return client.PatchAsync(CreateUri(requestUri), content);
         }
 
-        /// <summary>
-        /// Send a PATCH request to the specified Uri as an asynchronous operation.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// Returns <see cref="T:System.Threading.Tasks.Task`1"/>.The task object representing the asynchronous operation.
-        /// </returns>
-        /// <param name="client">The instantiated Http Client <see cref="HttpClient"/></param>
-        /// <param name="requestUri">The Uri the request is sent to.</param>
-        /// <param name="content">The HTTP request content sent to the server.</param>
-        /// <exception cref="T:System.ArgumentNullException">The <paramref name="client"/> was null.</exception>
-        /// <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri"/> was null.</exception>
+      
         public static Task<HttpResponseMessage> PatchAsync(this HttpClient client, Uri requestUri, HttpContent content)
         {
             return client.PatchAsync(requestUri, content, CancellationToken.None);
         }
-        /// <summary>
-        /// Send a PATCH request with a cancellation token as an asynchronous operation.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// Returns <see cref="T:System.Threading.Tasks.Task`1"/>.The task object representing the asynchronous operation.
-        /// </returns>
-        /// <param name="client">The instantiated Http Client <see cref="HttpClient"/></param>
-        /// <param name="requestUri">The Uri the request is sent to.</param>
-        /// <param name="content">The HTTP request content sent to the server.</param>
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="T:System.ArgumentNullException">The <paramref name="client"/> was null.</exception>
-        /// <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri"/> was null.</exception>
+      
         public static Task<HttpResponseMessage> PatchAsync(this HttpClient client, string requestUri, HttpContent content, CancellationToken cancellationToken)
         {
             return client.PatchAsync(CreateUri(requestUri), content, cancellationToken);
         }
 
-        /// <summary>
-        /// Send a PATCH request with a cancellation token as an asynchronous operation.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// Returns <see cref="T:System.Threading.Tasks.Task`1"/>.The task object representing the asynchronous operation.
-        /// </returns>
-        /// <param name="client">The instantiated Http Client <see cref="HttpClient"/></param>
-        /// <param name="requestUri">The Uri the request is sent to.</param>
-        /// <param name="content">The HTTP request content sent to the server.</param>
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="T:System.ArgumentNullException">The <paramref name="client"/> was null.</exception>
-        /// <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri"/> was null.</exception>
+      
         public static Task<HttpResponseMessage> PatchAsync(this HttpClient client, Uri requestUri, HttpContent content, CancellationToken cancellationToken)
         {
             return client.SendAsync(new HttpRequestMessage(new HttpMethod("PATCH"), requestUri)
@@ -110,7 +64,7 @@ class HTTPHelper
                 };
             var client = new HttpClient
             {
-                BaseAddress = new Uri("https://orion-unms.ukwest.cloudapp.azure.com/api/v1.0/"),
+                BaseAddress = new Uri("https://orionuk.unmsapp.com/api/v1.0/"),
                 DefaultRequestHeaders = { UserAgent = { new ProductInfoHeaderValue("ApiExample", "1.0") }
                     }
             };
@@ -121,9 +75,28 @@ class HTTPHelper
             }
             return client;
         }
+    public static HttpClient gethttpclientforunms()
 
+    {
+        var dict = new Dictionary<string, string> {
+                    { "X-Auth-Token", "f9547870-cbb3-40e6-815a-0818f79a0844"}
 
-        public static string httpGet(string entity)
+                };
+        var client = new HttpClient
+        {
+            BaseAddress = new Uri("https://orionuk.unmsapp.com/nms/api/v2.1/"),
+            DefaultRequestHeaders = { UserAgent = { new ProductInfoHeaderValue("ApiExample", "1.0") }
+                    }
+        };
+
+        foreach (var key in dict.Keys)
+        {
+            client.DefaultRequestHeaders.Add(key, dict[key]);
+        }
+        return client;
+    }
+
+    public static string httpGet(string entity)
         {
             var client = gethttpclient();
             var response = client.GetAsync(entity).Result;
@@ -134,7 +107,18 @@ class HTTPHelper
             }
             return null;
         }
-        public static bool httpPost(string entity, object entityObj)
+    public static string httpGetforunms(string entity)
+    {
+        var client = gethttpclientforunms();
+        var response = client.GetAsync(entity).Result;
+        if (response.IsSuccessStatusCode)
+        {
+            var responseContent = response.Content;
+            return responseContent.ReadAsStringAsync().Result;
+        }
+        return null;
+    }
+    public static bool httpPost(string entity, object entityObj)
         {
             var client = gethttpclient();
 
